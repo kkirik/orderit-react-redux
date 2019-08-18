@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:promise/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": ["react", "flowtype", "prettier", "promise"],
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "jest": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-param-reassign": 2,
+    "react/no-unescaped-entities": 0,
+    "react/prop-types": 0,
+    "import/no-extraneous-dependencies": 0,
+    "flowtype/no-types-missing-file-annotation": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    },
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}
