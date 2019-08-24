@@ -1,14 +1,27 @@
 {
   "extends": [
     "airbnb",
-    "plugin:flowtype/recommended",
     "eslint:recommended",
+    "plugin:react-redux/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:promise/recommended"
+    "plugin:promise/recommended",
+    "plugin:lodash/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:sonarjs/recommended"
   ],
   "parser": "babel-eslint",
-  "plugins": ["react", "flowtype", "prettier", "promise"],
+  "plugins": [
+    "react",
+    "prettier",
+    "@typescript-eslint",
+    "promise",
+    "react-redux",
+    "lodash",
+    "jsx-a11y",
+    "sonarjs"
+  ],
   "env": {
     "browser": true,
     "jasmine": true,
@@ -25,12 +38,27 @@
     "react/no-unescaped-entities": 0,
     "react/prop-types": 0,
     "import/no-extraneous-dependencies": 0,
-    "flowtype/no-types-missing-file-annotation": 0
+    "flowtype/no-types-missing-file-annotation": 0,
+    "consistent-return": "off",
+    "promise/no-callback-in-promise": 0,
+    "react/jsx-filename-extension": 0,
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "lines-between-class-members": 0,
+    "max-len": [2, 100, 2, { "ignoreUrls": true }]
   },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx"]
+        "extensions": [".js", ".ts", ".tsx"]
       }
     },
     "react": {

@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import './core/css-in-js/init';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
