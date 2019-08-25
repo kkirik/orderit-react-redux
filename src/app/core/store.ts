@@ -1,13 +1,16 @@
 import { createStore, Middleware, Store } from 'redux';
+import isFunction from 'lodash/isFunction';
+import forEach from 'lodash/forEach';
 
-import reducer from './reducer';
+import { isObject } from 'util';
+import reducer from './reducers/reducer';
 
 const addPromiseThunkSupport: Middleware = (_store) => (next) => (action) => {
-  if (typeof action === 'function') {
+  if (isFunction(action)) {
     return action(next);
   }
 
-  if (typeof action.then === 'function') {
+  if (isFunction(action.then)) {
     return action.then(next);
   }
 
@@ -17,12 +20,19 @@ const addPromiseThunkSupport: Middleware = (_store) => (next) => (action) => {
 function applyMiddleware(middlewares: Middleware[], store: Store) {
   const newStore = store;
 
-  middlewares.forEach((middleware) => {
+  forEach(middlewares, (middleware) => {
     newStore.dispatch = middleware(store)(store.dispatch);
   });
 }
 
-const middlewares = [addPromiseThunkSupport];
+const logger: Middleware = () => (next) => (action) => {
+  // eslint-disable-next-line no-console
+  if (!isObject(action)) return next(action);
+  console.log(action);
+  return next(action);
+};
+
+const middlewares = [addPromiseThunkSupport, logger];
 const store = createStore(reducer);
 
 applyMiddleware(middlewares, store);

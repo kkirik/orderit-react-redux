@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import withStyles from 'react-jss';
 
-interface IBlockProps {
+export interface IBlockProps {
   border?: string;
   borderRadius?: string;
   color?: string;
@@ -14,9 +14,10 @@ interface IBlockProps {
   center?: boolean;
   cursor?: string;
   background?: string;
+  onClick?: () => void;
 }
 
-const blockStyles = {
+export const blockStyles = {
   border: (props: IBlockProps) => props.border || 'none',
   borderRadius: (props: IBlockProps) => props.borderRadius || 0,
   color: (props: IBlockProps) => props.color,
@@ -33,19 +34,20 @@ const blockStyles = {
 };
 
 interface IFlexBoxProps extends IBlockProps {
-  justifyContent?: string;
-  alignItems?: string;
-  flexDirection?: string;
-  alignContent?: string;
+  justifycontent?: 'space-between' | 'center' | 'flex-start' | 'flex-end' | 'space-around';
+  alignitems?: string;
+  flexdirection?: string;
+  aligncontent?: string;
 }
 
 const flexStartDefaultValue = 'flex-start';
 const flexboxStyles = {
   display: 'flex',
-  flexDirection: ({ flexDirection = 'row' }: IFlexBoxProps) => flexDirection,
-  justifyContent: ({ justifyContent = flexStartDefaultValue }: IFlexBoxProps) => justifyContent,
-  alignItems: ({ alignItems = flexStartDefaultValue }: IFlexBoxProps) => alignItems,
-  alignContent: ({ alignContent = flexStartDefaultValue }: IFlexBoxProps) => alignContent,
+  flexWrap: 'wrap',
+  flexDirection: ({ flexdirection = 'row' }: IFlexBoxProps) => flexdirection,
+  justifyContent: ({ justifycontent = flexStartDefaultValue }: IFlexBoxProps) => justifycontent,
+  alignItems: ({ alignitems = flexStartDefaultValue }: IFlexBoxProps) => alignitems,
+  alignContent: ({ aligncontent = flexStartDefaultValue }: IFlexBoxProps) => aligncontent,
 };
 
 interface IFlexItemProps extends IBlockProps {
@@ -55,19 +57,33 @@ interface IFlexItemProps extends IBlockProps {
 }
 
 const flexboxItemStyles = {
-  grow: ({ grow = '0' }: IFlexItemProps) => grow,
-  shrink: ({ shrink = '1' }: IFlexItemProps) => shrink,
-  basis: ({ basis = 'auto' }: IFlexItemProps) => basis,
+  flexGrow: ({ grow = '0' }: IFlexItemProps) => grow,
+  flexShrink: ({ shrink = '1' }: IFlexItemProps) => shrink,
+  flexBasis: ({ basis = 'auto' }: IFlexItemProps) => basis,
 };
 
 export const FlexBox: FC<IFlexBoxProps> = withStyles({
   flexbox: { ...flexboxStyles, ...blockStyles },
-})(({ children, classes }) => <div className={classes.flexbox}>{children}</div>);
+})(({ children, classes, ...props }) => (
+  <div className={classes.flexbox} {...props}>
+    {children}
+  </div>
+));
 
 export const FlexItem: FC<IFlexItemProps> = withStyles({
   flexItem: { ...flexboxItemStyles, ...blockStyles },
-})(({ children, classes }) => <div className={classes.flexItem}>{children}</div>);
+})(({ children, classes, ...props }) => (
+  <div className={classes.flexItem} {...props}>
+    {children}
+  </div>
+));
 
 export const Block: FC<IBlockProps> = withStyles({ box: { ...blockStyles } })(
-  ({ children, classes }) => <div className={classes.box}>{children}</div>,
+  ({ children, classes, ...props }) => {
+    return (
+      <div className={classes.box} {...props}>
+        {children}
+      </div>
+    );
+  },
 );

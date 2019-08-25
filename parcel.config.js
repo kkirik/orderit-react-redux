@@ -17,6 +17,7 @@ app.use(
   '/api',
   proxy({
     target: process.env.WEBPACK_DEV_API,
+    changeOrigin: true,
   }),
 );
 
