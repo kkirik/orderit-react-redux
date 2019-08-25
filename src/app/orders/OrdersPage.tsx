@@ -1,17 +1,16 @@
 import React, { FC, useEffect } from 'react';
 import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import map from 'lodash/map';
-import find from 'lodash/find';
+import isEmpty from 'lodash/isEmpty';
 
 import { Order } from '../core/models/Order';
-import setNewOrders from '../core/actions/orders';
 import store from '../core/store';
 import { FlexBox, FlexItem } from '../core/css-in-js/blocks';
 import OrderCard from './OrderCard';
-import Spinner from '../core/layout/Spinner';
-import { setLoader, unsetLoader } from '../core/actions/loaders';
+import Spinner from '../core/components/spinner/Spinner';
+import { setLoader, unsetLoader } from '../core/components/spinner/SpinnerAction';
 import { LOAD_ORDERS } from '../core/constants';
+import { IOrdersAction } from './OrdersReducer';
 
 interface IQueryParams {
   search?: string;
@@ -20,7 +19,7 @@ interface IQueryParams {
 interface IProps {
   isFetching?: boolean;
   orders?: Order[];
-  setOrders: (orders: Order[]) => void;
+  setOrders: (orders: Order[]) => IOrdersAction;
 }
 
 const OrdersPage: FC<IProps> = ({ orders, setOrders, isFetching }) => {
@@ -46,9 +45,13 @@ const OrdersPage: FC<IProps> = ({ orders, setOrders, isFetching }) => {
 
   useEffect(() => {
     store.dispatch(getOrders({}));
+
+    return () => {
+      store.dispatch(setOrders([]));
+    };
   }, []);
 
-  if (isFetching) return <Spinner />;
+  if (isFetching || isEmpty(orders)) return <Spinner />;
 
   return (
     <FlexBox justifycontent="flex-start" margin="20px 0 0 0">
@@ -61,20 +64,4 @@ const OrdersPage: FC<IProps> = ({ orders, setOrders, isFetching }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  const loader = find(state.loaders, ['name', LOAD_ORDERS]);
-
-  return {
-    orders: state.orders.orders,
-    isFetching: loader && loader.isFetching,
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOrders: (orders: Order[]) => dispatch(setNewOrders(orders)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OrdersPage);
+export default OrdersPage;

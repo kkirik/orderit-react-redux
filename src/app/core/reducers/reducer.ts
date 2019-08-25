@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { activeElement, openMenu } from '../components/dropdownReducers';
-import loaders from './loaders';
-import orders from './orders';
+import dropdown from '../components/dropdown/DropdownReducer';
+import loaders from '../components/spinner/SpinnerReducer';
+import orders from '../../orders/OrdersReducer';
+import order from '../../order/OrderReducer';
 
-const reducer = combineReducers({ activeElement, openMenu, orders, loaders });
+const reducer = combineReducers({ dropdown, orders, order, loaders });
 
 export default reducer;

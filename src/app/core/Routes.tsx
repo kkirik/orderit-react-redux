@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
-import OrderPage from '../orders/OrderPage';
-import OrdersPage from '../orders/OrdersPage';
+import OrderPage from '../order/OrderPageContainer';
+import OrdersPage from '../orders/OrdersPageContainer';
 import Layout from './layout/Layout';
 
 const Routes = () => (

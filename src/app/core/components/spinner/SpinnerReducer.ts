@@ -1,6 +1,6 @@
 import reject from 'lodash/reject';
 
-import { SET_LOADING, UNSET_LOADING } from '../constants';
+import { SET_LOADING, UNSET_LOADING } from '../../constants';
 
 interface IAction {
   type: string;

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import { render, shallow } from 'enzyme';
 
-import { Dropdown, IItem } from '../Dropdown';
 import { Box } from 'src/core/styled/blocks';
 import { StyledMenuItems } from 'src/core/styled/dropdown';
+import Dropdown from '../dropdown/DropdownContainer';
+import { IItem } from '../dropdown/Dropdown';
 
 const dropdownMenu: IItem[] = [
   {
@@ -52,7 +53,7 @@ it('Correctly closed dropdown', () => {
   tree.find(Box).simulate('click');
   tree
     .find(StyledMenuItems)
-    .findWhere(li => li.type() === StyledMenuItems && li.text() === 'Logout')
+    .findWhere((li) => li.type() === StyledMenuItems && li.text() === 'Logout')
     .simulate('click', { target: { textContent: 'Logout' } });
 
   expect(tree.find(Link)).toHaveLength(0);
@@ -65,7 +66,7 @@ it('Correctly change active element', () => {
   tree.find(Box).simulate('click');
   tree
     .find(StyledMenuItems)
-    .findWhere(li => li.type() === StyledMenuItems && li.text() === 'Logout')
+    .findWhere((li) => li.type() === StyledMenuItems && li.text() === 'Logout')
     .simulate('click', { target: { textContent: 'Logout' } });
 
   expect(tree.find('div[children="Logout"]')).toHaveLength(1);

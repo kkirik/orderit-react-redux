@@ -1,4 +1,4 @@
-import { SET_LOADING, UNSET_LOADING } from '../constants';
+import { SET_LOADING, UNSET_LOADING } from '../../constants';
 
 export function setLoader(name: string) {
   return {

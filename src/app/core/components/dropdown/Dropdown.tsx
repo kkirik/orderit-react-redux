@@ -1,14 +1,10 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import map from 'lodash/map';
 import find from 'lodash/find';
-import isEmpty from 'lodash/isEmpty';
 
-import { Block } from '../css-in-js/blocks';
-import { StyledMenu, StyledMenuItems } from '../css-in-js/dropdown';
-import { setActiveElementMenu, setStateOpenMenu } from './actionCreators';
+import { Block } from '../../css-in-js/blocks';
+import { StyledMenu, StyledMenuItems } from '../../css-in-js/dropdown';
 
 export interface IItem {
   title: string;
@@ -16,12 +12,8 @@ export interface IItem {
   active: boolean;
 }
 
-interface IState {
-  openMenu: boolean;
-  activeElement: IItem;
-}
 
-interface IProps {
+export interface IDropdownProps {
   items: IItem[];
   openMenu?: boolean;
   activeElement?: IItem;
@@ -29,7 +21,7 @@ interface IProps {
   setActiveElement?: (element: IItem) => void;
 }
 
-const Dropdown0: FC<IProps> = ({
+const Dropdown: FC<IDropdownProps> = ({
   items,
   openMenu,
   activeElement,
@@ -67,22 +59,4 @@ const Dropdown0: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: IState, ownProps: IProps) => {
-  const defaultActiveElement = find(ownProps.items, ['active', true]);
-  const activeElement = isEmpty(state.activeElement) ? defaultActiveElement : state.activeElement;
-
-  return {
-    activeElement,
-    openMenu: state.openMenu,
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setActiveElement: (element: IItem) => dispatch(setActiveElementMenu(element)),
-  setOpenMenu: (state: boolean) => dispatch(setStateOpenMenu(state)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Dropdown0);
+export default Dropdown;

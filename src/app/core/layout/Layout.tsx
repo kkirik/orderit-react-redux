@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
 import { FlexBox, FlexItem } from '../css-in-js/blocks';
-import Dropdown, { IItem } from '../components/Dropdown';
 import { Logo } from '../css-in-js/typography';
+import Dropdown from '../components/dropdown/DropdownContainer';
+import { IItem } from '../components/dropdown/Dropdown';
 
 const Layout: FC = ({ children }) => {
   const profileMenu: IItem[] = [

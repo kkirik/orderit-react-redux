@@ -1,23 +1,22 @@
 import React, { FC, useEffect } from 'react';
 import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import map from 'lodash/map';
-import find from 'lodash/find';
+import isEmpty from 'lodash/isEmpty';
 
 import { Block } from '../core/css-in-js/blocks';
 import { DT, DD } from '../core/css-in-js/typography';
 import { Order } from '../core/models/Order';
-import { setNewOrder } from '../core/actions/orders';
 import { LOAD_ORDER } from '../core/constants';
-import { setLoader, unsetLoader } from '../core/actions/loaders';
-import Spinner from '../core/layout/Spinner';
+import { setLoader, unsetLoader } from '../core/components/spinner/SpinnerAction';
+import Spinner from '../core/components/spinner/Spinner';
 import store from '../core/store';
+import { IOrderAction } from './OrderReducer';
 
 interface IProps extends RouteComponentProps<{ id: string }> {
   order?: Order;
   isFetching?: boolean;
-  setOrder?: (order: Order) => void;
+  setOrder?: (order: Order) => IOrderAction;
 }
 
 const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
@@ -30,7 +29,7 @@ const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
           const res = await fetch(`/api/orders/${match.params.id}`);
           const data: Order = await res.json();
 
-          setOrder(new Order(data));
+          setOrder(data);
         } finally {
           dispatch(unsetLoader(LOAD_ORDER));
         }
@@ -40,7 +39,7 @@ const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
     store.dispatch(getOrder());
   }, []);
 
-  if (isFetching || !order) return <Spinner />;
+  if (isFetching || isEmpty(order)) return <Spinner />;
 
   return (
     <Block
@@ -84,22 +83,4 @@ const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  const loader = find(state.loaders, ['name', LOAD_ORDER]);
-
-  console.log(state);
-
-  return {
-    order: state.orders.order,
-    isFetching: loader && loader.isFetching,
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOrder: (order: Order) => dispatch(setNewOrder(order)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OrderPage);
+export default OrderPage;
