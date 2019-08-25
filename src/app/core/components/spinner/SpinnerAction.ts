@@ -1,6 +1,19 @@
 import { SET_LOADING, UNSET_LOADING } from '../../constants';
 
-export function setLoader(name: string) {
+interface ISetLoader {
+  type: 'SET_LOADING';
+  name: string;
+  isFetching: boolean;
+}
+
+interface IUnsetLoader {
+  type: 'UNSET_LOADING';
+  name: string;
+}
+
+export type SpinnerActionType = ISetLoader & IUnsetLoader;
+
+export function setLoader(name: string): ISetLoader {
   return {
     name,
     type: SET_LOADING,
@@ -8,7 +21,7 @@ export function setLoader(name: string) {
   };
 }
 
-export function unsetLoader(name: string) {
+export function unsetLoader(name: string): IUnsetLoader {
   return {
     name,
     type: UNSET_LOADING,

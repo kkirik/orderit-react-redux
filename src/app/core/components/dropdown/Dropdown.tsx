@@ -5,6 +5,7 @@ import find from 'lodash/find';
 
 import { Block } from '../../css-in-js/blocks';
 import { StyledMenu, StyledMenuItems } from '../../css-in-js/dropdown';
+import { IProps } from './DropdownContainer';
 
 export interface IItem {
   title: string;
@@ -13,15 +14,8 @@ export interface IItem {
 }
 
 
-export interface IDropdownProps {
-  items: IItem[];
-  openMenu?: boolean;
-  activeElement?: IItem;
-  setOpenMenu?: (state: boolean) => void;
-  setActiveElement?: (element: IItem) => void;
-}
 
-const Dropdown: FC<IDropdownProps> = ({
+const Dropdown: FC<IProps> = ({
   items,
   openMenu,
   activeElement,
@@ -37,7 +31,7 @@ const Dropdown: FC<IDropdownProps> = ({
 
   return (
     <Block
-      center="true"
+      center
       width="100%"
       height="60px"
       cursor="pointer"

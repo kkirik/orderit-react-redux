@@ -1,16 +1,28 @@
 import { IItem } from './Dropdown';
 import { SET_ELEMENT, SET_OPEN_MENU } from '../../constants';
 
-export function setActiveElementMenu(element: IItem) {
+interface ISetElement {
+  type: 'SET_ELEMENT';
+  activeElement: IItem;
+}
+
+interface ISetOpenMenu {
+  type: 'SET_OPEN_MENU';
+  openMenu: boolean;
+}
+
+export type DropdownAction = ISetElement | ISetOpenMenu;
+
+export function setActiveElementMenu(activeElement: IItem): ISetElement {
   return {
+    activeElement,
     type: SET_ELEMENT,
-    data: element,
   };
 }
 
-export function setStateOpenMenu(data: boolean) {
+export function setStateOpenMenu(openMenu: boolean): ISetOpenMenu {
   return {
-    data,
+    openMenu,
     type: SET_OPEN_MENU,
   };
 }

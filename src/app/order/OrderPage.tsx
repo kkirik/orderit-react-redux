@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from 'react';
-import { Dispatch } from 'redux';
+import { AnyAction } from 'redux';
 import { RouteComponentProps } from 'react-router-dom';
 import map from 'lodash/map';
-import isEmpty from 'lodash/isEmpty';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { Block } from '../core/css-in-js/blocks';
 import { DT, DD } from '../core/css-in-js/typography';
@@ -11,18 +11,14 @@ import { LOAD_ORDER } from '../core/constants';
 import { setLoader, unsetLoader } from '../core/components/spinner/SpinnerAction';
 import Spinner from '../core/components/spinner/Spinner';
 import store from '../core/store';
-import { IOrderAction } from './OrderReducer';
+import { IOrderProps } from './OrderPageContainer';
 
-interface IProps extends RouteComponentProps<{ id: string }> {
-  order?: Order;
-  isFetching?: boolean;
-  setOrder?: (order: Order) => IOrderAction;
-}
+interface IProps extends RouteComponentProps<{ id: string }> {}
 
-const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
+const OrderPage: FC<IOrderProps & IProps> = ({ match, order, setOrder, isFetching }) => {
   useEffect(() => {
-    function getOrder() {
-      return async (dispatch: Dispatch) => {
+    function getOrder(): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+      return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
         dispatch(setLoader(LOAD_ORDER));
 
         try {
@@ -39,7 +35,7 @@ const OrderPage: FC<IProps> = ({ match, order, setOrder, isFetching }) => {
     store.dispatch(getOrder());
   }, []);
 
-  if (isFetching || isEmpty(order)) return <Spinner />;
+  if (isFetching || !order.customer) return <Spinner />;
 
   return (
     <Block

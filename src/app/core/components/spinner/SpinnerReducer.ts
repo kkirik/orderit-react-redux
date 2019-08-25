@@ -1,14 +1,14 @@
 import reject from 'lodash/reject';
 
 import { SET_LOADING, UNSET_LOADING } from '../../constants';
+import { SpinnerActionType } from './SpinnerAction';
 
-interface IAction {
-  type: string;
+export interface ISpinnerState {
   name: string;
   isFetching: boolean;
 }
 
-function loader(state: IAction[] = [], action: IAction) {
+function reducer(state: ISpinnerState[] = [], action: SpinnerActionType): ISpinnerState[] {
   switch (action.type) {
     case SET_LOADING:
       return [...state, { name: action.name, isFetching: action.isFetching }];
@@ -21,4 +21,4 @@ function loader(state: IAction[] = [], action: IAction) {
   }
 }
 
-export default loader;
+export default reducer;

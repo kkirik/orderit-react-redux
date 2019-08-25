@@ -1,13 +1,25 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import find from 'lodash/find';
+import { ThunkDispatch } from 'redux-thunk';
 
 import { Order } from '../core/models/Order';
 import { LOAD_ORDER } from '../core/constants';
 import OrderPage from './OrderPage';
 import setNewOrder from './OrderAction';
+import { IRootState } from '../core/reducers/reducer';
 
-const mapStateToProps = (state: any) => {
+interface IStateProps {
+  order: Order;
+  isFetching: boolean;
+}
+
+interface IDispatchProps {
+  setOrder: (order: Order) => void;
+}
+
+export type IOrderProps = IStateProps & IDispatchProps;
+
+const mapStateToProps = (state: IRootState): IStateProps => {
   const loader = find(state.loaders, ['name', LOAD_ORDER]);
 
   return {
@@ -16,11 +28,11 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOrder: (order: Order) => dispatch(setNewOrder(order)),
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProps => ({
+  setOrder: (order) => dispatch(setNewOrder(order)),
 });
 
-export default connect(
+export default connect<IStateProps, IDispatchProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(OrderPage);
