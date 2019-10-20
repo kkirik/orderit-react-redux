@@ -8,7 +8,7 @@ export interface ISpinnerState {
   isFetching: boolean;
 }
 
-function reducer(state: ISpinnerState[] = [], action: SpinnerActionType): ISpinnerState[] {
+function reducer(state: ISpinnerState[] = [], action: SpinnerActionType) {
   switch (action.type) {
     case SET_LOADING:
       return [...state, { name: action.name, isFetching: action.isFetching }];

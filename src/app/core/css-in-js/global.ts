@@ -24,7 +24,7 @@ const styles: any = {
       margin: 0,
       padding: 0,
     },
-    'body, input': {
+    '*': {
       fontFamily: 'Peenu',
     },
     'body, ul': {

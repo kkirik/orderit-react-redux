@@ -3,7 +3,7 @@ import map from 'lodash/map';
 import { SET_ORDERS, LOAD_ORDERS } from '../core/constants';
 import { Order } from '../core/models/Order';
 import { setLoader, unsetLoader } from '../core/components/spinner/SpinnerAction';
-import { ThunkResult } from './OrdersPageContainer';
+import { ThunkResult } from '../core/reducers/reducer';
 
 export interface IOrdersAction {
   type: 'SET_ORDERS';
@@ -25,12 +25,10 @@ export function getOrders(queryParams: IQueryParams) {
   return async (dispatch: ThunkResult) => {
     dispatch(setLoader(LOAD_ORDERS));
 
-    const params = {
-      ...(queryParams && { search: queryParams.search }),
-    };
+    const queryString = queryParams.search ? `?search=${queryParams.search}` : '';
 
     try {
-      const res = await fetch('/api/orders', { data: params });
+      const res = await fetch(`/api/orders${queryString}`);
       const data: Order[] = await res.json();
       const newOrders = map(data, (o) => new Order(o));
 

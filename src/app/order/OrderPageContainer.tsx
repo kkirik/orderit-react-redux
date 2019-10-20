@@ -5,7 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Order } from '../core/models/Order';
 import { LOAD_ORDER } from '../core/constants';
 import OrderPage from './OrderPage';
-import setNewOrder from './OrderAction';
+import { getOrder } from './OrderAction';
 import { IRootState } from '../core/reducers/reducer';
 
 interface IStateProps {
@@ -14,7 +14,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  setOrder: (order: Order) => void;
+  loadOrder: (id: string) => void;
 }
 
 export type IOrderProps = IStateProps & IDispatchProps;
@@ -29,7 +29,7 @@ const mapStateToProps = (state: IRootState): IStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProps => ({
-  setOrder: (order) => dispatch(setNewOrder(order)),
+  loadOrder: (id) => dispatch(getOrder(id)),
 });
 
 export default connect<IStateProps, IDispatchProps>(

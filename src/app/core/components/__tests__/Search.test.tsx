@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 
 import { Input } from 'src/core/styled/form';
-import { Search } from '../Search';
+import { Search } from '../search/Search';
 
 it('Correctly render', () => {
   const component = renderer.create(<Search onSubmit={null} />);

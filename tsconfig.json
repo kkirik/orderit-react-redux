@@ -3,7 +3,7 @@
     "noImplicitAny": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "checkJs": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -20,7 +20,7 @@
     "sourceMap": false,
     "target": "es2017",
     "paths": {
-      "src/*": ["src/*"]
+      "~*": ["./*"]
     }
   },
   "include": ["src/**/*"]

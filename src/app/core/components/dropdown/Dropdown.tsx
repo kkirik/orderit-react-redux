@@ -13,8 +13,6 @@ export interface IItem {
   active: boolean;
 }
 
-
-
 const Dropdown: FC<IProps> = ({
   items,
   openMenu,

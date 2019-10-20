@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import withStyles from 'react-jss';
+import withStyles, { WithStyles } from 'react-jss';
 
 export interface IBlockProps {
   border?: string;
@@ -62,28 +62,38 @@ const flexboxItemStyles = {
   flexBasis: ({ basis = 'auto' }: IFlexItemProps) => basis,
 };
 
-export const FlexBox: FC<IFlexBoxProps> = withStyles({
-  flexbox: { ...flexboxStyles, ...blockStyles },
-})(({ children, classes, ...props }) => (
-  <div className={classes.flexbox} {...props}>
+const flexbox = { flexbox: { ...flexboxStyles, ...blockStyles } };
+type FlexBoxStyledProps = WithStyles<typeof flexbox> & IFlexBoxProps & IBlockProps;
+
+const FlexBoxComponent: FC<FlexBoxStyledProps> = ({ children, classes, onClick }) => (
+  <div className={classes.flexbox} onClick={onClick}>
     {children}
   </div>
-));
-
-export const FlexItem: FC<IFlexItemProps> = withStyles({
-  flexItem: { ...flexboxItemStyles, ...blockStyles },
-})(({ children, classes, ...props }) => (
-  <div className={classes.flexItem} {...props}>
-    {children}
-  </div>
-));
-
-export const Block: FC<IBlockProps> = withStyles({ box: { ...blockStyles } })(
-  ({ children, classes, ...props }) => {
-    return (
-      <div className={classes.box} {...props}>
-        {children}
-      </div>
-    );
-  },
 );
+
+export const FlexBox = withStyles({ ...flexbox })(FlexBoxComponent);
+
+const flexItem = { flexItem: { ...flexboxItemStyles, ...blockStyles } };
+type FlexItemStyledProps = WithStyles<typeof flexItem> & IFlexItemProps & IBlockProps;
+
+const FlexItemComponent: FC<FlexItemStyledProps> = ({ children, classes, onClick }) => (
+  <div className={classes.flexItem} onClick={onClick}>
+    {children}
+  </div>
+);
+
+export const FlexItem = withStyles({ ...flexItem })(FlexItemComponent);
+
+const box = { box: { ...blockStyles } };
+
+type BlockStyledProps = WithStyles<typeof box> & IBlockProps;
+
+const BlockComponent: FC<BlockStyledProps> = ({ children, classes, onClick }) => {
+  return (
+    <div className={classes.box} onClick={onClick}>
+      {children}
+    </div>
+  );
+};
+
+export const Block = withStyles({ ...box })(BlockComponent);

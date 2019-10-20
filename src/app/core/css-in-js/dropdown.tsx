@@ -26,4 +26,8 @@ export const StyledMenuItems = withStyles({
       transition: '0.2s ease-in',
     },
   },
-})(({ children, classes }) => <li className={classes.item}>{children}</li>);
+})(({ children, classes, onClick }) => (
+  <li className={classes.item} onClick={onClick}>
+    {children}
+  </li>
+));

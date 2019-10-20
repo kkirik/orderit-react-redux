@@ -1,24 +1,21 @@
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import find from 'lodash/find';
 
 import { Order } from '../core/models/Order';
 import { LOAD_ORDERS } from '../core/constants';
-import setNewOrders, { IQueryParams, getOrders } from './OrdersAction';
+import { setNewOrders, IQueryParams, getOrders } from './OrdersAction';
 import OrdersPage from './OrdersPage';
-import { IRootState } from '../core/reducers/reducer';
+import { IRootState, ThunkResult } from '../core/reducers/reducer';
 
 interface IStateProps {
   orders: Order[];
   isFetching: boolean;
 }
 
-export type ThunkResult = ThunkDispatch<IStateProps, {}, any>;
-
 interface IDispatchProps {
   setOrders: (orders: Order[]) => AnyAction;
-  loadOrders: (queryParams: IQueryParams) => (dispatch: ThunkResult) => Promise<void>;
+  loadOrders: (queryParams: IQueryParams) => Promise<void>;
 }
 
 export type OrderPageProps = IStateProps & IDispatchProps;

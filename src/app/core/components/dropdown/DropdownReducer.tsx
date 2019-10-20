@@ -1,6 +1,3 @@
-/* eslint-disable sonarjs/no-small-switch */
-import { combineReducers } from 'redux';
-
 import { IItem } from './Dropdown';
 import { SET_ELEMENT, SET_OPEN_MENU } from '../../constants';
 import { DropdownAction } from './DropdownAction';
@@ -10,7 +7,7 @@ export interface IDropdownState {
   openMenu?: boolean;
 }
 
-function reducer(state: IDropdownState = {}, action: DropdownAction): IDropdownState {
+function reducer(state: IDropdownState = {}, action: DropdownAction) {
   switch (action.type) {
     case SET_ELEMENT:
       return { ...state, activeElement: action.activeElement };
@@ -21,6 +18,4 @@ function reducer(state: IDropdownState = {}, action: DropdownAction): IDropdownS
   }
 }
 
-export default combineReducers<any>({
-  reducer,
-});
+export default reducer;

@@ -1,18 +1,21 @@
+import map from 'lodash/map';
+import assign from 'lodash/assign';
+
 import { Order } from './Order';
 
-class User {
+class Profile {
   firstname: string;
   lastname: string;
   balance: number;
   orderList: Order[] = [];
 
   get orders() {
-    return _.map(this.orderList, (order) => new Order(order));
+    return map(this.orderList, (order) => new Order(order));
   }
 
-  constructor(profile?: Omit<User, 'orders'>) {
-    Object.assign(this, profile);
+  constructor(profile?: Omit<Profile, 'orders'>) {
+    assign(this, profile);
   }
 }
 
-export default User;
+export default Profile;

@@ -1,16 +1,33 @@
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
+
 import { Order } from '../core/models/Order';
-import { SET_ORDER } from '../core/constants';
+import { SET_ORDER, LOAD_ORDER } from '../core/constants';
+import { setLoader, unsetLoader } from '../core/components/spinner/SpinnerAction';
 
 export interface IOrderAction {
-  type: 'SET_ORDER';
+  type: typeof SET_ORDER;
   data: Order;
 }
 
-function setNewOrder(order: Order): IOrderAction {
+export function setNewOrder(order: Order): IOrderAction {
   return {
-    type: SET_ORDER,
     data: order,
+    type: SET_ORDER,
   };
 }
 
-export default setNewOrder;
+export function getOrder(id: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+  return async (dispatch) => {
+    dispatch(setLoader(LOAD_ORDER));
+
+    try {
+      const res = await fetch(`/api/orders/${id}`);
+      const data: Order = await res.json();
+
+      dispatch(setNewOrder(data));
+    } finally {
+      dispatch(unsetLoader(LOAD_ORDER));
+    }
+  };
+}

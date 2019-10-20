@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+import { connect } from 'react-redux';
 
 import OrderPage from '../order/OrderPageContainer';
 import OrdersPage from '../orders/OrdersPageContainer';
+import ProfilePage from '../profile/ProfilePageContainer';
 import Layout from './layout/Layout';
+import { IRootState } from './reducers/reducer';
+import { Order } from './models/Order';
 
-const Routes = () => (
-  <Layout>
+const Routes: FC<IStateToProps> = ({ order }) => (
+  <Layout orderId={String(order.orderNumber)}>
     <Switch>
       <Route exact path="/" component={OrdersPage} />
       <Route exact path="/orders" component={OrdersPage} />
       <Route exact path="/orders/:id" component={OrderPage} />
-      <Route exact path="/profile" component={OrderPage} />
+      <Route exact path="/profile" component={ProfilePage} />
 
       <Redirect to="/" />
     </Switch>
   </Layout>
 );
 
-export default Routes;
+interface IStateToProps {
+  order: Order;
+}
+
+const mapStateToProps = (state: IRootState) => ({
+  order: state.order,
+});
+
+export default connect(mapStateToProps)(Routes);
