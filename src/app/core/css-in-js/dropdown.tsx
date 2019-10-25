@@ -1,5 +1,5 @@
-import React from 'react';
-import withStyles from 'react-jss';
+import React, { FC } from 'react';
+import withStyles, { WithStyles } from 'react-jss';
 
 export const StyledMenu = withStyles({
   menu: {
@@ -11,7 +11,7 @@ export const StyledMenu = withStyles({
   },
 })(({ children, classes }) => <ul className={classes.menu}>{children}</ul>);
 
-export const StyledMenuItems = withStyles({
+const menuItemsProps = {
   item: {
     borderBottom: '1px solid lightgray',
     cursor: 'pointer',
@@ -26,8 +26,18 @@ export const StyledMenuItems = withStyles({
       transition: '0.2s ease-in',
     },
   },
-})(({ children, classes, onClick }) => (
+};
+
+interface IMenuItemsProps {
+  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+}
+
+type MenuItemsProps = WithStyles<typeof menuItemsProps> & IMenuItemsProps;
+
+const MenuItems: FC<MenuItemsProps> = ({ children, classes, onClick }) => (
   <li className={classes.item} onClick={onClick}>
     {children}
   </li>
-));
+);
+
+export const StyledMenuItems = withStyles({ ...menuItemsProps })(MenuItems);

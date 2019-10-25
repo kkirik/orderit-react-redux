@@ -17,7 +17,7 @@ interface IDropdownProps {
 }
 
 interface IStateProps {
-  activeElement: IItem;
+  activeElement?: IItem;
   openMenu: boolean;
 }
 

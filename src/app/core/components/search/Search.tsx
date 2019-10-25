@@ -23,7 +23,6 @@ export class Search extends React.Component<IProps, IState> {
 
   componentDidMount() {
     const searchString = localStorage.getItem('SEARCH') || '';
-
     this.setState({ search: searchString });
   }
 

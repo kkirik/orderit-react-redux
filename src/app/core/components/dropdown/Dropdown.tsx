@@ -37,7 +37,7 @@ const Dropdown: FC<IProps> = ({
       position="relative"
       onClick={() => setOpenMenu(!openMenu)}
     >
-      <div>{activeElement && activeElement.title}</div>
+      {activeElement && <div className="active-element">{activeElement.title}</div>}
       {openMenu && (
         <StyledMenu>
           {map(items, (item) => (
