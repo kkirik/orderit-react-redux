@@ -10,7 +10,7 @@ import { IRootState } from './reducers/reducer';
 import { Order } from './models/Order';
 
 const Routes: FC<IStateToProps> = ({ order }) => (
-  <Layout orderId={String(order.orderNumber)}>
+  <Layout orderId={order.orderNumber}>
     <Switch>
       <Route exact path="/" component={OrdersPage} />
       <Route exact path="/orders" component={OrdersPage} />

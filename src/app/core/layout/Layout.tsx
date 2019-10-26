@@ -7,7 +7,7 @@ import { IItem } from '../components/dropdown/Dropdown';
 import { ChoisenLink } from '../css-in-js/order';
 
 interface IProps {
-  orderId: string;
+  orderId: number;
 }
 
 const Layout: FC<IProps> = ({ children, orderId }) => {
